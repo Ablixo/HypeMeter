@@ -1,69 +1,33 @@
-HypeMeter — Trailer Hype Voting (MVP)
+# HypeMeter · Trailer Hype Voting (MVP)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.111+-009688?logo=fastapi)](https://fastapi.tiangolo.com/)
+[![Python](https://img.shields.io/badge/Python-3.11+-3776AB?logo=python)](https://www.python.org/)
 
-Small FastAPI backend where users vote HYPED or NAH on trailers and view a leaderboard.
+
+Small FastAPI backend where users vote **HYPED** or **NAH** on trailers and view a leaderboard.  
 Data is in-memory (resets on restart) to keep the MVP simple.
 
-Run (dev)
+👉 Swagger docs: **http://localhost:8000/docs**
+
+---
+
+## ✨ Features
+- Create trailers (id, title, platform)
+- Cast one vote per user per trailer (HYPED/NAH)
+- Leaderboard sorted by `(hypedCount - nahCount)`
+- Health check & OpenAPI docs
+
+---
+
+## ⚡ Quickstart
+
+```bash
+# 1) Create & activate a venv (optional but recommended)
+python -m venv .venv
+# Windows: .venv\Scripts\activate
+# macOS/Linux: source .venv/bin/activate
+
+# 2) Install dependencies
+pip install fastapi uvicorn pydantic
+
+# 3) Run the API (dev)
 uvicorn api.app:app --reload
-# Docs: http://localhost:8000/docs
-
-Endpoints
-GET
-GET /health
-
-Returns app status.
-
-{ "status": "ok" }
-
-GET /trailers
-
-List all trailers.
-
-[
-  { "id": "tt-superman", "title": "Superman Movie", "platform": "Youtube" }
-]
-
-GET /leaderboard?limit=10
-
-Top trailers sorted by score = hypedCount - nahCount.
-
-[
-  { "trailerId": "tt-superman", "title": "Superman Movie", "hypedCount": 3, "nahCount": 1, "score": 2 }
-]
-
-POST
-POST /trailers
-
-Create a trailer.
-Body
-
-{
-  "id": "tt-oppenheimer",
-  "title": "Oppenheimer Trailer",
-  "platform": "Youtube"
-}
-
-
-Responses
-
-201 Created — returns created trailer
-
-409 Conflict — id already exists
-
-422 Unprocessable Content — bad/missing fields
-
-POST /vote
-
-Cast a vote (one vote per user per trailer).
-Body
-
-{
-  "trailerId": "tt-superman",
-  "userId": "anon-123",
-  "vote": "HYPED"
-}
-
-
-Success
-
-{ "trailerId": "tt-superman", "hypedCount": 4, "nahCount": 1, "score": 3 }
