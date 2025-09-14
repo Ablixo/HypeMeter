@@ -18,7 +18,7 @@ Data is in-memory (resets on restart) to keep the MVP simple.
 
 ---
 
-## ⚡ Quickstart
+## ⚡ Quickstart Guide
 
 ```bash
 # 1) Create & activate a venv (optional but recommended)
